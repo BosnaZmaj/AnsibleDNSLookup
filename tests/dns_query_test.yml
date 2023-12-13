@@ -1,0 +1,73 @@
+---
+- name: Test dns_query Module
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Test resolving domain name to IP
+      dns_query:
+        host: "google.com"
+      register: resolve_domain
+
+    - name: Debug dns_query result
+      debug:
+        var: resolve_domain
+
+
+    - name: Assert for successful domain name resolution
+      assert:
+        that:
+          - "resolve_domain.ip_address is defined"
+          - "resolve_domain.ip_address | type_debug == 'list'"
+          - "resolve_domain.ip_address | length > 0"
+        fail_msg: "Failed to resolve domain name to IP"
+        success_msg: "Successfully resolved domain name to IP"
+
+    - name: Test resolving IP address to domain name
+      dns_query:
+        ip: "8.8.8.8"
+      register: resolve_ip
+
+    - name: Debug dns_query result
+      debug:
+        var: resolve_ip
+
+    - name: Assert for successful IP address resolution
+      assert:
+        that:
+          - "resolve_ip.hostnames is defined"
+          - "resolve_ip.hostnames | length > 0"
+        fail_msg: "Failed to resolve IP address to domain name"
+        success_msg: "Successfully resolved IP address to domain name"
+
+    - name: Test IP Query with Custom DNS Server
+      dns_query:
+        ip: "0.1.2.4"
+        dns_server: "9.9.9.9"
+      ignore_errors: True
+      register: custom_dns_ip_query
+
+    - name: Debug dns_query result
+      debug:
+        var: custom_dns_ip_query
+
+    - name: Assert for successful IP query with custom DNS server
+      assert:
+        that:
+          - "custom_dns_ip_query.hostnames is defined"
+          - "custom_dns_ip_query.hostnames | length > 0"
+        fail_msg: "Failed to query IP with custom DNS server"
+        success_msg: "Successfully queried IP with custom DNS server"
+
+    - name: Test host query with custom DNS server
+      dns_query:
+        host: "google.com"
+        dns_server: "8.8.8.8"
+      register: custom_dns_host_query
+
+    - name: Assert for successful host query with custom DNS server
+      assert:
+        that:
+          - "custom_dns_host_query.ip_address is defined"
+          - "custom_dns_host_query.ip_address | length > 0"
+        fail_msg: "Failed to query host with custom DNS server"
+        success_msg: "Successfully queried host with custom DNS server"
