@@ -30,7 +30,7 @@ by default looks for standalone modules. If the directories do not exist, the sc
    ```bash
    curl -O https://github.com/BosnaZmaj/dns_query_module/get_dns_query.sh
    chmod +x get_dns_query.sh
-   ./download_module.sh
+   ./get_dns_query.sh
    ```
 2. **Script Features**  
    * Checks if `curl` command exists and creates `~/.ansible/plugins/modules/` directories if not existing.
@@ -42,7 +42,7 @@ If your preference is manual or need to customize the installation:
 
 1. **Download the Module**
    ```bash
-   wget https://raw.githubusercontent.com/BosnaZmaj/dns_query_module/main/dns_query.py
+   wget https://raw.githubusercontent.com/BosnaZmaj/AnsibleDNSLookup/main/plugins/modules/dns_query.py
    ```
 2. **Place the Module**:  
 Place the `dns_query.py` file in your Ansible library path, which typically is `~/.ansible/plugins/modules`
