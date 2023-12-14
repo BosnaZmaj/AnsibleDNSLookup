@@ -15,8 +15,8 @@
 
 
 # Definitions
-MODULE_URL="https://github.com/BosnaZmaj/dns_query_module/plugins/modules/dns_query.py"
-DEST_DIR="$HOME/.ansible/plugins/modules/"
+MODULE_URL="https://github.com/BosnaZmaj/AnsibleDNSLookup/blob/main/plugins/modules/dns_query.py"
+DEST_DIR="$HOME/.ansible/plugins/modules"
 MODULE_FILE="$DEST_DIR/dns_query.py"
 
 # Checking for modules existence
@@ -39,8 +39,7 @@ fi
 
 # Check if dns_query.py exists
 if [ -f "$MODULE_FILE" ]; then
-  read -r -p "dns_query.py module already exists. Proceeding will overwrite the current dns_query.py \
-  and any changes made by user will be lost. Continue? (yes/no) " choice
+  read -r -p "dns_query.py module already exists. Proceeding will overwrite the current dns_query.py and any changes made by user will be lost. Continue? (yes/no) " choice
   case "$choice" in
   yes|YES|Yes )
     echo "Proceeding with the download..."
@@ -54,7 +53,7 @@ fi
 
 # Download
 echo "Downloading dns_query.py to $MODULE_FILE"
-if [ curl -L "$MODULE_URL" -o "$MODULE_FILE" ]; then
+if  curl -L "$MODULE_URL" -o "$MODULE_FILE" ; then
   echo "Download successful"
 else
   echo "Download failed!"
